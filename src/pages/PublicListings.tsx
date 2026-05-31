@@ -320,6 +320,17 @@ export default function PublicListings() {
                 </div>
               </div>
 
+              <div className="modal-section">
+                <h4>Origin and Recognition</h4>
+                <p>
+                  <strong>Origin:</strong> {selectedItem.origin || "Not specified"}
+                </p>
+                <p>
+                  <strong>Year of Recognition:</strong>{" "}
+                  {selectedItem.yearOfRecognition || "Not specified"}
+                </p>
+              </div>
+
               {/* Description */}
               <div className="modal-section">
                 <h4>Description</h4>
@@ -358,6 +369,11 @@ export default function PublicListings() {
                       <span><strong>Classification:</strong> {selectedCustodian.type}</span>
                       {selectedCustodian.contactEmail && <span><strong>Email:</strong> {selectedCustodian.contactEmail}</span>}
                       {selectedCustodian.contactPhone && <span><strong>Contact #:</strong> {selectedCustodian.contactPhone}</span>}
+                      {selectedCustodian.officialRepresentative && (
+                      <span>
+                        <strong>Official Representative:</strong>{" "}
+                        {selectedCustodian.officialRepresentative}
+                      </span> )}
                       {selectedCustodian.address && <span><strong>Office Address:</strong> {selectedCustodian.address}</span>}
                     </div>
                   </div>

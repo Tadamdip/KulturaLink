@@ -9,4 +9,5 @@ export type Custodian = {
     establishedYear: string;
     createdBy?: string;
     createdAt?: any;
+    officialRepresentative: string;
 };

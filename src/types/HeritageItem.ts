@@ -2,6 +2,8 @@ export type HeritageItem = {
     id?: string;
     name: string;
     type: string;
+    origin?: string;
+    yearOfRecognition?: string;
     province: string;
     municipality: string;
     latitude: string;

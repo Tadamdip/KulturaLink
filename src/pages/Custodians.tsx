@@ -21,6 +21,7 @@ export default function Custodians() {
   const [formData, setFormData] = useState({
     name: "",
     type: "",
+    officialRepresentative: "",
     contactEmail: "",
     contactPhone: "",
     address: "",
@@ -71,6 +72,7 @@ export default function Custodians() {
     setFormData({
       name: "",
       type: "",
+      officialRepresentative: "",
       contactEmail: "",
       contactPhone: "",
       address: "",
@@ -200,6 +202,14 @@ export default function Custodians() {
               onChange={handleChange}
               className="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
             />
+            <input
+              name="officialRepresentative"
+              placeholder="Official Representative"
+              value={formData.officialRepresentative}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+            />
 
             <input
               name="address"
@@ -258,6 +268,7 @@ export default function Custodians() {
                   <th className="p-4 rounded-tl-xl">Name</th>
                   <th className="p-4">Type</th>
                   <th className="p-4">Contact</th>
+                  <th className="p-4">Representative</th>
                   <th className="p-4">Address</th>
                   <th className="p-4">Established</th>
                   <th className="p-4 rounded-tr-xl">Action</th>
@@ -294,6 +305,7 @@ export default function Custodians() {
                         <div>{c.contactEmail || "—"}</div>
                         <div>{c.contactPhone || ""}</div>
                       </td>
+                      <td className="p-4">{c.officialRepresentative || "—"}</td>
                       <td className="p-4">{c.address || "—"}</td>
                       <td className="p-4">{c.establishedYear || "—"}</td>
                       <td className="p-4">
