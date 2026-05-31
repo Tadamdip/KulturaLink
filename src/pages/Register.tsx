@@ -16,9 +16,7 @@ function Register() {
     try {
       await createUserWithEmailAndPassword(auth, email.trim(), password.trim());
       navigate("/dashboard");
-    } catch (error: any) {
-      setMessage(error.message);
-    }
+    } catch (error: unknown) {`r`n      setMessage(error instanceof Error ? error.message : "Registration failed.");`r`n    }
   };
 
   return (
