@@ -151,16 +151,6 @@ export default function Festivals() {
         </p>
       </div>
 
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
-          Festivals & Events
-        </h1>
-
-        <p className="text-gray-600 dark:text-slate-300 mt-2">
-          Manage cultural festivals and heritage events.
-        </p>
-      </div>
-
       {message && (
         <div className="mb-6 bg-green-100 text-green-700 px-4 py-3 rounded-xl font-semibold">
           {message}
