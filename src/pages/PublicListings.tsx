@@ -143,16 +143,18 @@ export default function PublicListings() {
     : [];
 
   return (
-    <div className="public-page-shell">
-    <div className="public-listings-container">
-      {/* Header */}
+    <div className="min-h-screen bg-[#FDFBF8] dark:bg-slate-900 transition-colors duration-200">
+      <div className="public-listings-container">
+        {/* Header */}
       <header className="public-header">
         <div>
           <h1>🏛️ Cultural Heritage Registry</h1>
           <p className="public-subtitle">Public Repository of Heritage Sites, Custodians & Festivals</p>
         </div>
         <div className="header-actions">
-          <DarkModeToggle />
+          <div style={{ display: "flex", alignItems: "center", marginRight: "1rem" }}>
+            <DarkModeToggle />
+          </div>
           <Link to="/reports" className="btn-nav">
             📊 Reports & Analytics
           </Link>

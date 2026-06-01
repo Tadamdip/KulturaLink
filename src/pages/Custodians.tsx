@@ -133,6 +133,17 @@ export default function Custodians() {
 
   return (
     <div>
+
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
+          Custodian Organizations
+        </h1>
+
+        <p className="text-gray-600 dark:text-slate-300 mt-2">
+          Manage organizations responsible for heritage preservation.
+        </p>
+      </div>
+      
       <div className="mb-8">
         <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
           Custodian Organizations
@@ -276,23 +287,21 @@ export default function Custodians() {
               <tbody>
                 {filteredCustodians.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="text-center py-10 text-gray-500 dark:text-slate-400">
+                    <td colSpan={6} className="text-center py-10 text-gray-500 dark:text-slate-400">
                       No custodian organizations found.
                     </td>
                   </tr>
                 ) : (
                   filteredCustodians.map((custodian) => (
                     <tr
-                      key={custodian.id}
+                      key={c.id}
                       className="border-b border-gray-100 dark:border-slate-700 hover:bg-[#F8F5F0] dark:hover:bg-slate-700/50 transition"
                     >
                       <td className="p-4">
-                        <p className="font-semibold text-[#3E2F26] dark:text-slate-100">
-                          {custodian.name}
-                        </p>
-                        {custodian.description && (
+                        <p className="font-semibold text-[#3E2F26] dark:text-slate-100">{c.name}</p>
+                        {c.description && (
                           <p className="text-sm text-gray-500 dark:text-slate-400 mt-1">
-                            {custodian.description}
+                            {c.description}
                           </p>
                         )}
                       </td>

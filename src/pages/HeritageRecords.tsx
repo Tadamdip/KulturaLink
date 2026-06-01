@@ -59,11 +59,20 @@ function HeritageRecords() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8 gap-4">
+
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
+          Heritage Records
+        </h1>
+
+        <p className="text-gray-600 dark:text-slate-300 mt-2">
+          Manage cultural heritage items and preservation details.
+        </p>
+      </div>
+
+      <div className="flex justify-between items-center mb-8">
         <div>
-          <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
-            Heritage Records
-          </h1>
+          <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">Heritage Records</h1>
           <p className="text-gray-600 dark:text-slate-300 mt-2">
             Manage cultural heritage items and preservation information.
           </p>
@@ -109,10 +118,7 @@ function HeritageRecords() {
             <tbody>
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={9}
-                    className="text-center py-10 text-gray-500 dark:text-slate-400"
-                  >
+                  <td colSpan={7} className="text-center py-10 text-gray-500 dark:text-slate-400">
                     No heritage records found.
                   </td>
                 </tr>

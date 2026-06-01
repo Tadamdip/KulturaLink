@@ -181,37 +181,6 @@ function EditHeritage() {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                  Origin
-                </label>
-                <input
-                  name="origin"
-                  placeholder="Example: Maranao, Ifugao, Cebuano, local community"
-                  value={formData.origin}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                  Year of Recognition
-                </label>
-                <input
-                  type="number"
-                  name="yearOfRecognition"
-                  placeholder="Example: 1998"
-                  value={formData.yearOfRecognition}
-                  onChange={handleChange}
-                  required
-                  min="1500"
-                  max={new Date().getFullYear()}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
                   Province
                 </label>
                 <input
@@ -246,21 +215,31 @@ function EditHeritage() {
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <input
-                name="latitude"
-                placeholder="Latitude"
-                value={formData.latitude}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              />
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Latitude
+                </label>
+                <input
+                  name="latitude"
+                  placeholder="Example: 7.9986"
+                  value={formData.latitude}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
+              </div>
 
-              <input
-                name="longitude"
-                placeholder="Longitude"
-                value={formData.longitude}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              />
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Longitude
+                </label>
+                <input
+                  name="longitude"
+                  placeholder="Example: 124.2928"
+                  value={formData.longitude}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
+              </div>
             </div>
           </div>
 
@@ -270,121 +249,74 @@ function EditHeritage() {
             </h2>
 
             <div className="grid grid-cols-1 gap-5">
-              <textarea
-                name="description"
-                placeholder="Description"
-                value={formData.description}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              />
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  placeholder="Describe the heritage item"
+                  value={formData.description}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
+              </div>
 
-              <textarea
-                name="culturalSignificance"
-                placeholder="Cultural Significance"
-                value={formData.culturalSignificance}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              />
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Cultural Significance
+                </label>
+                <textarea
+                  name="culturalSignificance"
+                  placeholder="Explain the importance of this heritage item"
+                  value={formData.culturalSignificance}
+                  onChange={handleChange}
+                  required
+                  rows={4}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
+              </div>
             </div>
           </div>
 
           <div>
             <h2 className="text-xl font-bold text-[#3E2F26] dark:text-slate-100 mb-4">
-              Status, Relations, and Media
+              Status and Media
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <select
-                name="preservationStatus"
-                value={formData.preservationStatus}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              >
-                <option value="">Select Status</option>
-                <option value="Good">Good</option>
-                <option value="Needs Preservation">Needs Preservation</option>
-                <option value="Endangered">Endangered</option>
-                <option value="Restored">Restored</option>
-              </select>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Preservation Status
+                </label>
+                <select
+                  name="preservationStatus"
+                  value={formData.preservationStatus}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                >
+                  <option value="">Select Status</option>
+                  <option value="Good">Good</option>
+                  <option value="Needs Preservation">Needs Preservation</option>
+                  <option value="Endangered">Endangered</option>
+                  <option value="Restored">Restored</option>
+                </select>
+              </div>
 
-              <input
-                name="imageUrl"
-                placeholder="Image URL"
-                value={formData.imageUrl}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              />
-            </div>
-
-            <div className="mt-5">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                Custodian Organization
-              </label>
-              <select
-                name="custodianId"
-                value={formData.custodianId}
-                onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-              >
-                <option value="">Select custodian</option>
-                {custodians.map((custodian) => (
-                  <option key={custodian.id} value={custodian.id}>
-                    {custodian.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="mt-5">
-              <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                Related Festivals or Events
-              </label>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 rounded-xl border border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-4">
-                {festivals.length === 0 ? (
-                  <p className="text-sm text-gray-500 dark:text-slate-400">
-                    No festivals or events registered yet.
-                  </p>
-                ) : (
-                  festivals.map((festival) => (
-                    <label
-                      key={festival.id}
-                      className="flex items-start gap-3 rounded-lg bg-[#F8F5F0] dark:bg-slate-800 px-4 py-3 cursor-pointer hover:bg-[#EFE7D8] dark:hover:bg-slate-700 transition"
-                    >
-                      <input
-                        type="checkbox"
-                        value={festival.id}
-                        checked={formData.festivalIds.includes(festival.id || "")}
-                        onChange={(e) => {
-                          const festivalId = e.target.value;
-
-                          setFormData({
-                            ...formData,
-                            festivalIds: e.target.checked
-                              ? [...formData.festivalIds, festivalId]
-                              : formData.festivalIds.filter((id) => id !== festivalId),
-                          });
-                        }}
-                        className="mt-1 accent-[#556B2F]"
-                      />
-
-                      <span>
-                        <span className="block font-semibold text-[#3E2F26] dark:text-slate-100">
-                          {festival.name}
-                        </span>
-                        <span className="block text-sm text-gray-600 dark:text-slate-400">
-                          {festival.type}
-                          {festival.date ? ` • ${festival.date}` : ""}
-                        </span>
-                      </span>
-                    </label>
-                  ))
-                )}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Image URL
+                </label>
+                <input
+                  name="imageUrl"
+                  placeholder="Paste image link here"
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
               </div>
             </div>
           </div>

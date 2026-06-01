@@ -145,37 +145,6 @@ function AddHeritage() {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                  Origin
-                </label>
-                <input
-                  name="origin"
-                  placeholder="Example: Maranao, Ifugao, Cebuano, local community"
-                  value={formData.origin}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
-                  Year of Recognition
-                </label>
-                <input
-                  type="number"
-                  name="yearOfRecognition"
-                  placeholder="Example: 1998"
-                  value={formData.yearOfRecognition}
-                  onChange={handleChange}
-                  required
-                  min="1500"
-                  max={new Date().getFullYear()}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
                   Province
                 </label>
                 <input
@@ -278,7 +247,7 @@ function AddHeritage() {
 
           <div>
             <h2 className="text-xl font-bold text-[#3E2F26] dark:text-slate-100 mb-4">
-              Status, Relations, and Media
+              Status and Media
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">

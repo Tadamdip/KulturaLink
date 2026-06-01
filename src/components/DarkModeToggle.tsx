@@ -1,4 +1,4 @@
-import { useTheme } from '../context/useTheme';
+import { useTheme } from '../context/ThemeContext';
 import { FiSun, FiMoon } from 'react-icons/fi';
 
 export default function DarkModeToggle() {
