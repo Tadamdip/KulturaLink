@@ -44,7 +44,11 @@ export default function Festivals() {
   };
 
   useEffect(() => {
-    void fetchFestivals();
+    const timeoutId = window.setTimeout(() => {
+      void fetchFestivals();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   const handleChange = (

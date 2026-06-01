@@ -143,18 +143,16 @@ export default function PublicListings() {
     : [];
 
   return (
-    <div className="min-h-screen bg-[#FDFBF8] dark:bg-slate-900 transition-colors duration-200">
-      <div className="public-listings-container">
-        {/* Header */}
+    <div className="public-page-shell">
+    <div className="public-listings-container">
+      {/* Header */}
       <header className="public-header">
         <div>
           <h1>🏛️ Cultural Heritage Registry</h1>
-          <p style={{ margin: "0.2rem 0 0 0" }}>Public Repository of Heritage Sites, Custodians & Festivals</p>
+          <p className="public-subtitle">Public Repository of Heritage Sites, Custodians & Festivals</p>
         </div>
         <div className="header-actions">
-          <div style={{ display: "flex", alignItems: "center", marginRight: "1rem" }}>
-            <DarkModeToggle />
-          </div>
+          <DarkModeToggle />
           <Link to="/reports" className="btn-nav">
             📊 Reports & Analytics
           </Link>
@@ -319,10 +317,21 @@ export default function PublicListings() {
                   <span className={`badge-tag status-${selectedItem.preservationStatus?.toLowerCase().replace(/\s+/g, "-")}`}>
                     {selectedItem.preservationStatus}
                   </span>
-                  <span className="badge-tag" style={{ background: "#F8F5F0", color: "#7a6b57" }}>
+                  <span className="badge-tag location-badge">
                     📍 {selectedItem.municipality}, {selectedItem.province}
                   </span>
                 </div>
+              </div>
+
+              <div className="modal-section">
+                <h4>Origin and Recognition</h4>
+                <p>
+                  <strong>Origin:</strong> {selectedItem.origin || "Not specified"}
+                </p>
+                <p>
+                  <strong>Year of Recognition:</strong>{" "}
+                  {selectedItem.yearOfRecognition || "Not specified"}
+                </p>
               </div>
 
               {/* Description */}
@@ -356,13 +365,18 @@ export default function PublicListings() {
                   <h4>🛡️ Preservation Custodian</h4>
                   <div className="custodian-detail">
                     <span className="custodian-name">{selectedCustodian.name}</span>
-                    <p style={{ fontSize: "0.9rem", color: "#5A4A40", margin: "0.2rem 0 0.8rem 0" }}>
+                    <p className="custodian-description">
                       {selectedCustodian.description || "Custodian organization dedicated to local preservation."}
                     </p>
                     <div className="custodian-meta">
                       <span><strong>Classification:</strong> {selectedCustodian.type}</span>
                       {selectedCustodian.contactEmail && <span><strong>Email:</strong> {selectedCustodian.contactEmail}</span>}
                       {selectedCustodian.contactPhone && <span><strong>Contact #:</strong> {selectedCustodian.contactPhone}</span>}
+                      {selectedCustodian.officialRepresentative && (
+                      <span>
+                        <strong>Official Representative:</strong>{" "}
+                        {selectedCustodian.officialRepresentative}
+                      </span> )}
                       {selectedCustodian.address && <span><strong>Office Address:</strong> {selectedCustodian.address}</span>}
                     </div>
                   </div>
@@ -381,7 +395,7 @@ export default function PublicListings() {
                           📅 {fest.date} | 📍 {fest.location} ({fest.type})
                         </div>
                         {fest.description && (
-                          <p style={{ fontSize: "0.85rem", color: "#7a6b57", marginTop: "0.25rem" }}>
+                          <p className="festival-description">
                             {fest.description}
                           </p>
                         )}

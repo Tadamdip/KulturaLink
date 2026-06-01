@@ -1,7 +1,11 @@
+import type { Timestamp } from "firebase/firestore";
+
 export type HeritageItem = {
     id?: string;
     name: string;
     type: string;
+    origin?: string;
+    yearOfRecognition?: string;
     province: string;
     municipality: string;
     latitude: string;
@@ -11,7 +15,7 @@ export type HeritageItem = {
     preservationStatus: string;
     imageUrl: string;
     createdBy?: string;
-    createdAt?: any;
+    createdAt?: Timestamp | null;
     custodianId?: string;
     festivalIds?: string[];
     relatedHeritageIds?: string[];

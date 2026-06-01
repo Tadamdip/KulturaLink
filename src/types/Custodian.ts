@@ -1,3 +1,5 @@
+import type { Timestamp } from "firebase/firestore";
+
 export type Custodian = {
     id?: string;
     name: string;
@@ -8,5 +10,6 @@ export type Custodian = {
     description: string;
     establishedYear: string;
     createdBy?: string;
-    createdAt?: any;
+    createdAt?: Timestamp | null;
+    officialRepresentative: string;
 };

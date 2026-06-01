@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
-import { db } from "../firebase/firebaseConfig";
 import { Link } from "react-router-dom";
+import { FaEdit, FaPlus, FaSearch, FaTrash } from "react-icons/fa";
+import { db } from "../firebase/firebaseConfig";
 import type { HeritageItem } from "../types/HeritageItem";
-import { FaEdit, FaTrash, FaPlus, FaSearch } from "react-icons/fa";
 
 function HeritageRecords() {
   const [records, setRecords] = useState<HeritageItem[]>([]);
@@ -13,15 +13,15 @@ function HeritageRecords() {
   const fetchRecords = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "heritageItems"));
-      const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
+      const data = querySnapshot.docs.map((document) => ({
+        id: document.id,
+        ...document.data(),
       })) as HeritageItem[];
 
       setRecords(data);
-      setLoading(false);
     } catch (error) {
-      console.log(error);
+      console.error(error);
+    } finally {
       setLoading(false);
     }
   };
@@ -31,37 +31,39 @@ function HeritageRecords() {
     if (!confirmDelete) return;
 
     await deleteDoc(doc(db, "heritageItems", id));
-    fetchRecords();
+    void fetchRecords();
   };
 
   useEffect(() => {
-    fetchRecords();
+    const timeoutId = window.setTimeout(() => {
+      void fetchRecords();
+    }, 0);
+
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
-  const filteredRecords = records.filter((record) =>
-    record.name.toLowerCase().includes(searchText.toLowerCase()) ||
-    record.province.toLowerCase().includes(searchText.toLowerCase()) ||
-    record.municipality.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredRecords = records.filter((record) => {
+    const query = searchText.toLowerCase();
 
-  if (loading) return <p className="text-gray-600">Loading records...</p>;
+    return (
+      record.name.toLowerCase().includes(query) ||
+      record.province.toLowerCase().includes(query) ||
+      record.municipality.toLowerCase().includes(query) ||
+      (record.origin || "").toLowerCase().includes(query)
+    );
+  });
+
+  if (loading) {
+    return <p className="text-gray-600 dark:text-slate-300">Loading records...</p>;
+  }
 
   return (
     <div>
-
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
-          Heritage Records
-        </h1>
-
-        <p className="text-gray-600 dark:text-slate-300 mt-2">
-          Manage cultural heritage items and preservation details.
-        </p>
-      </div>
-
-      <div className="flex justify-between items-center mb-8">
+      <div className="flex justify-between items-center mb-8 gap-4">
         <div>
-          <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">Heritage Records</h1>
+          <h1 className="text-4xl font-bold text-[#3E2F26] dark:text-slate-100">
+            Heritage Records
+          </h1>
           <p className="text-gray-600 dark:text-slate-300 mt-2">
             Manage cultural heritage items and preservation information.
           </p>
@@ -81,7 +83,7 @@ function HeritageRecords() {
           <FaSearch className="text-gray-500 dark:text-slate-400" />
           <input
             type="text"
-            placeholder="Search by name, province, or municipality..."
+            placeholder="Search by name, origin, province, or municipality..."
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
             className="bg-transparent outline-none w-full text-gray-700 dark:text-slate-200"
@@ -95,6 +97,8 @@ function HeritageRecords() {
                 <th className="p-4 rounded-tl-xl">Image</th>
                 <th className="p-4">Name</th>
                 <th className="p-4">Type</th>
+                <th className="p-4">Origin</th>
+                <th className="p-4">Year Recognized</th>
                 <th className="p-4">Province</th>
                 <th className="p-4">Municipality</th>
                 <th className="p-4">Status</th>
@@ -105,7 +109,7 @@ function HeritageRecords() {
             <tbody>
               {filteredRecords.length === 0 ? (
                 <tr>
-                  <td colSpan={7} className="text-center py-10 text-gray-500 dark:text-slate-400">
+                  <td colSpan={9} className="text-center py-10 text-gray-500 dark:text-slate-400">
                     No heritage records found.
                   </td>
                 </tr>
@@ -133,9 +137,13 @@ function HeritageRecords() {
                       {record.name}
                     </td>
 
-                    <td className="p-4">{record.type}</td>
-                    <td className="p-4">{record.province}</td>
-                    <td className="p-4">{record.municipality}</td>
+                    <td className="p-4 dark:text-slate-200">{record.type}</td>
+                    <td className="p-4 dark:text-slate-200">{record.origin || "N/A"}</td>
+                    <td className="p-4 dark:text-slate-200">
+                      {record.yearOfRecognition || "N/A"}
+                    </td>
+                    <td className="p-4 dark:text-slate-200">{record.province}</td>
+                    <td className="p-4 dark:text-slate-200">{record.municipality}</td>
 
                     <td className="p-4">
                       <span className="px-3 py-1 rounded-full text-sm bg-green-100 text-green-700 font-semibold">

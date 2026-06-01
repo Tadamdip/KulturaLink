@@ -1,7 +1,9 @@
-import { useState } from "react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useEffect, useState } from "react";
+import { addDoc, collection, getDocs, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import type { Custodian } from "../types/Custodian";
+import type { Festival } from "../types/Festival";
 
 function AddHeritage() {
   const navigate = useNavigate();
@@ -9,17 +11,48 @@ function AddHeritage() {
   const [formData, setFormData] = useState({
     name: "",
     type: "",
+    origin: "",
+    yearOfRecognition: "",
     province: "",
     municipality: "",
     latitude: "",
     longitude: "",
+    custodianId: "",
+    festivalIds: [] as string[],
     description: "",
     culturalSignificance: "",
     preservationStatus: "",
     imageUrl: "",
   });
 
+  const [custodians, setCustodians] = useState<Custodian[]>([]);
+  const [festivals, setFestivals] = useState<Festival[]>([]);
   const [message, setMessage] = useState("");
+
+  useEffect(() => {
+    const fetchOptions = async () => {
+      try {
+        const custodianSnapshot = await getDocs(collection(db, "custodians"));
+        const custodianData = custodianSnapshot.docs.map((document) => ({
+          id: document.id,
+          ...document.data(),
+        })) as Custodian[];
+
+        const festivalSnapshot = await getDocs(collection(db, "festivals"));
+        const festivalData = festivalSnapshot.docs.map((document) => ({
+          id: document.id,
+          ...document.data(),
+        })) as Festival[];
+
+        setCustodians(custodianData);
+        setFestivals(festivalData);
+      } catch {
+        setMessage("Failed to load custodian and festival options.");
+      }
+    };
+
+    void fetchOptions();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -45,8 +78,10 @@ function AddHeritage() {
       setTimeout(() => {
         navigate("/heritage-records");
       }, 1000);
-    } catch (error: any) {
-      setMessage(error.message);
+    } catch (error: unknown) {
+      setMessage(
+        error instanceof Error ? error.message : "Failed to add heritage record."
+      );
     }
   };
 
@@ -106,6 +141,37 @@ function AddHeritage() {
                   <option value="Natural">Natural</option>
                   <option value="Mixed">Mixed</option>
                 </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Origin
+                </label>
+                <input
+                  name="origin"
+                  placeholder="Example: Maranao, Ifugao, Cebuano, local community"
+                  value={formData.origin}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                  Year of Recognition
+                </label>
+                <input
+                  type="number"
+                  name="yearOfRecognition"
+                  placeholder="Example: 1998"
+                  value={formData.yearOfRecognition}
+                  onChange={handleChange}
+                  required
+                  min="1500"
+                  max={new Date().getFullYear()}
+                  className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+                />
               </div>
 
               <div>
@@ -212,7 +278,7 @@ function AddHeritage() {
 
           <div>
             <h2 className="text-xl font-bold text-[#3E2F26] dark:text-slate-100 mb-4">
-              Status and Media
+              Status, Relations, and Media
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -246,6 +312,73 @@ function AddHeritage() {
                   onChange={handleChange}
                   className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
                 />
+              </div>
+            </div>
+
+            <div className="mt-5">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                Custodian Organization
+              </label>
+              <select
+                name="custodianId"
+                value={formData.custodianId}
+                onChange={handleChange}
+                className="w-full px-4 py-3 border border-gray-300 dark:border-slate-600 dark:bg-slate-700 dark:text-slate-100 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
+              >
+                <option value="">Select custodian</option>
+                {custodians.map((custodian) => (
+                  <option key={custodian.id} value={custodian.id}>
+                    {custodian.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="mt-5">
+              <label className="block text-sm font-semibold text-gray-700 dark:text-slate-300 mb-2">
+                Related Festivals or Events
+              </label>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 rounded-xl border border-gray-300 dark:border-slate-600 dark:bg-slate-700 p-4">
+                {festivals.length === 0 ? (
+                  <p className="text-sm text-gray-500 dark:text-slate-400">
+                    No festivals or events registered yet.
+                  </p>
+                ) : (
+                  festivals.map((festival) => (
+                    <label
+                      key={festival.id}
+                      className="flex items-start gap-3 rounded-lg bg-[#F8F5F0] dark:bg-slate-800 px-4 py-3 cursor-pointer hover:bg-[#EFE7D8] dark:hover:bg-slate-700 transition"
+                    >
+                      <input
+                        type="checkbox"
+                        value={festival.id}
+                        checked={formData.festivalIds.includes(festival.id || "")}
+                        onChange={(e) => {
+                          const festivalId = e.target.value;
+
+                          setFormData({
+                            ...formData,
+                            festivalIds: e.target.checked
+                              ? [...formData.festivalIds, festivalId]
+                              : formData.festivalIds.filter((id) => id !== festivalId),
+                          });
+                        }}
+                        className="mt-1 accent-[#556B2F]"
+                      />
+
+                      <span>
+                        <span className="block font-semibold text-[#3E2F26] dark:text-slate-100">
+                          {festival.name}
+                        </span>
+                        <span className="block text-sm text-gray-600 dark:text-slate-400">
+                          {festival.type}
+                          {festival.date ? ` • ${festival.date}` : ""}
+                        </span>
+                      </span>
+                    </label>
+                  ))
+                )}
               </div>
             </div>
           </div>
