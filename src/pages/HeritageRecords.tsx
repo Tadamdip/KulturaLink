@@ -71,7 +71,7 @@ function HeritageRecords() {
 
         <Link
           to="/add-heritage"
-          className="flex items-center gap-2 bg-[#556B2F] hover:bg-[#445523] text-white px-5 py-3 rounded-xl font-semibold transition shadow"
+          className="flex items-center gap-2 bg-[#556B2F] hover:bg-[#445523] text-white px-5 py-3 rounded-xl font-semibold transition shadow mr-16 md:mr-20"
         >
           <FaPlus />
           Add Record
