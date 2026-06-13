@@ -13,6 +13,8 @@ import Reports from "./pages/Reports";
 
 import MainLayout from "./components/layout/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Unauthorized from "./pages/Unauthorized";
+import { HERITAGE_EDITOR_ROLES, ORGANIZATION_MANAGER_ROLES } from "./types/UserRole";
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/public-listings" element={<PublicListings />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* PROTECTED ADMIN PAGES */}
         <Route
@@ -49,7 +52,7 @@ function App() {
         <Route
           path="/add-heritage"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={HERITAGE_EDITOR_ROLES}>
               <MainLayout>
                 <AddHeritage />
               </MainLayout>
@@ -60,7 +63,7 @@ function App() {
         <Route
           path="/edit-heritage/:id"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={HERITAGE_EDITOR_ROLES}>
               <MainLayout>
                 <EditHeritage />
               </MainLayout>
@@ -71,7 +74,7 @@ function App() {
         <Route
           path="/custodians"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={ORGANIZATION_MANAGER_ROLES}>
               <MainLayout>
                 <Custodians />
               </MainLayout>
@@ -82,7 +85,7 @@ function App() {
         <Route
           path="/festivals"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedRoles={ORGANIZATION_MANAGER_ROLES}>
               <MainLayout>
                 <Festivals />
               </MainLayout>
