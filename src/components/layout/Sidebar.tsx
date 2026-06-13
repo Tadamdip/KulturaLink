@@ -4,11 +4,16 @@ import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { FaSignOutAlt } from "react-icons/fa";
+import { useAuth } from "../../context/useAuth";
+import { HERITAGE_EDITOR_ROLES, ORGANIZATION_MANAGER_ROLES } from "../../types/UserRole";
 
 
 function Sidebar() {
 
   const navigate = useNavigate();
+  const { can } = useAuth();
+  const canEditHeritage = can(HERITAGE_EDITOR_ROLES);
+  const canManageOrganizations  = can(ORGANIZATION_MANAGER_ROLES);
 
   const handleLogout = async () => {
     await signOut(auth);
@@ -40,20 +45,26 @@ function Sidebar() {
           Heritage Records
         </NavLink>
 
-        <NavLink to="/add-heritage" className={linkClass}>
-          <FaPlus />
-          Add Heritage
-        </NavLink>
+        {canEditHeritage && (
+            <NavLink to="/add-heritage" className={linkClass}>
+              <FaPlus />
+              Add Heritage
+            </NavLink>
+          )}
 
-        <NavLink to="/custodians" className={linkClass}>
-          <FaUsers />
-          Custodians
-        </NavLink>
+          {canManageOrganizations && (
+            <NavLink to="/custodians" className={linkClass}>
+              <FaUsers />
+              Custodians
+            </NavLink>
+          )}
 
-        <NavLink to="/festivals" className={linkClass}>
-          <FaCalendarAlt />
-          Festivals
-        </NavLink>
+          {canManageOrganizations && (
+            <NavLink to="/festivals" className={linkClass}>
+              <FaCalendarAlt />
+              Festivals
+            </NavLink>
+          )}
 
         <NavLink to="/reports" className={linkClass}>
           <FaChartBar />
