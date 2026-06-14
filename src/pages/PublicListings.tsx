@@ -165,6 +165,7 @@ export default function PublicListings() {
               🔑 Portal Login
             </Link>
           )}
+          <Link to="/developers" className="btn-nav"> Developers </Link>
         </div>
       </header>
 

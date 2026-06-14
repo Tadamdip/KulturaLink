@@ -2,7 +2,7 @@
 
 .public-page-shell {
   min-height: 100vh;
-  background: #FDFBF8;
+  background: transparent;
   transition: background-color 0.2s ease-in-out;
 }
 
@@ -596,7 +596,7 @@
 }
 
 /* Dark Mode Overrides */
-html.dark .public-page-shell { background: #0f172a; }
+html.dark .public-page-shell { background: transparent; }
 html.dark .public-listings-container { color: #f1f5f9; }
 html.dark .public-header h1 { color: #f1f5f9; }
 html.dark .public-subtitle { color: #cbd5e1; }

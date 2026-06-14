@@ -4,7 +4,7 @@ import DarkModeToggle from "../DarkModeToggle";
 
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-[#F8F5F0] dark:bg-slate-900 text-gray-900 dark:text-slate-100 min-h-screen relative transition-colors duration-200">
+    <div className="bg-transparent text-gray-900 dark:text-slate-100 min-h-screen relative transition-colors duration-200">
       <Sidebar />
       <MobileNav />
 
