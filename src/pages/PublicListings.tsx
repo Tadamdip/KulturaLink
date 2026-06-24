@@ -7,6 +7,7 @@ import type { Custodian } from "../types/Custodian";
 import type { Festival } from "../types/Festival";
 import DarkModeToggle from "../components/DarkModeToggle";
 import "./PublicListings.css";
+import HeritageLoader from "../components/HeritageLoader";
 
 export default function PublicListings() {
   const [records, setRecords] = useState<HeritageItem[]>([]);
@@ -127,9 +128,10 @@ export default function PublicListings() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
-        <h3>Loading Cultural Heritage Directory...</h3>
-      </div>
+      <HeritageLoader
+        message="Loading the cultural heritage directory..."
+        count={6}
+      />
     );
   }
 

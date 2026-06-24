@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaEdit, FaPlus, FaSearch, FaTrash } from "react-icons/fa";
 import { db } from "../firebase/firebaseConfig";
 import type { HeritageItem } from "../types/HeritageItem";
+import HeritageLoader from "../components/HeritageLoader";
 
 function HeritageRecords() {
   const [records, setRecords] = useState<HeritageItem[]>([]);
@@ -54,7 +55,12 @@ function HeritageRecords() {
   });
 
   if (loading) {
-    return <p className="text-gray-600 dark:text-slate-300">Loading records...</p>;
+    return (
+      <HeritageLoader
+        message="Loading heritage records..."
+        count={6}
+      />
+    );
   }
 
   return (

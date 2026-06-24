@@ -6,6 +6,7 @@ import type { HeritageItem } from "../types/HeritageItem";
 import type { Custodian } from "../types/Custodian";
 import type { Festival } from "../types/Festival";
 import "./Reports.css";
+import HeritageLoader from "../components/HeritageLoader";
 
 type TabOption = "overview" | "categories" | "regions";
 
@@ -147,9 +148,10 @@ export default function Reports() {
 
   if (loading) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "80vh" }}>
-        <h3>Generating Analytics Reports...</h3>
-      </div>
+      <HeritageLoader
+        message="Preparing reports and analytics..."
+        count={4}
+      />
     );
   }
 
