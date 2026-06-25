@@ -20,7 +20,7 @@ export default function Unauthorized() {
                 <p className="text-gray-600 dark:text-slate-300 mt-3">
                 {profile?.status === "pending"
                     ? "Your account is still pending approval."
-                    : `Your current role (${role || "none"}) cannot access this page.`}
+                    : `Your current role (${role || "none"}) click the button below to proceed.`}
                 </p>
 
                 <Link

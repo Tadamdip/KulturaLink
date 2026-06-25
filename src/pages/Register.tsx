@@ -1,29 +1,56 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/firebaseConfig";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserPlus } from "react-icons/fa";
+import { auth } from "../firebase/firebaseConfig";
 
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [isFlipping, setIsFlipping] = useState(false);
+
   const navigate = useNavigate();
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRegister = async (event: React.FormEvent) => {
+    event.preventDefault();
 
     try {
-      await createUserWithEmailAndPassword(auth, email.trim(), password.trim());
+      await createUserWithEmailAndPassword(
+        auth,
+        email.trim(),
+        password.trim()
+      );
+
       navigate("/dashboard");
     } catch (error: unknown) {
-      setMessage(error instanceof Error ? error.message : "Registration failed.");
+      setMessage(
+        error instanceof Error ? error.message : "Registration failed."
+      );
     }
   };
 
+  const handlePageSwitch = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    destination: string
+  ) => {
+    event.preventDefault();
+
+    if (isFlipping) return;
+
+    setIsFlipping(true);
+
+    window.setTimeout(() => {
+      navigate(destination);
+    }, 400);
+  };
+
   return (
-    <div className="min-h-screen bg-transparent flex items-center justify-center px-4">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+    <div className="auth-perspective min-h-screen bg-transparent flex items-center justify-center px-4">
+      <div
+        className={`auth-flip-card auth-glass-card w-full max-w-md p-8 ${
+            isFlipping ? "auth-flip-out" : ""
+          }`}>
         <div className="text-center mb-8">
           <div className="mx-auto bg-[#3E2F26] text-[#F4D58D] w-20 h-20 rounded-full flex items-center justify-center mb-4">
             <FaUserPlus className="text-4xl" />
@@ -32,7 +59,10 @@ function Register() {
           <h1 className="text-3xl font-bold text-[#3E2F26]">
             Create Account
           </h1>
-          <p className="text-gray-500 mt-2">Register as system user</p>
+
+          <p className="text-gray-700 mt-1">
+            Register as a system user
+          </p>
         </div>
 
         {message && (
@@ -46,11 +76,12 @@ function Register() {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Email Address
             </label>
+
             <input
               type="email"
-              placeholder="Enter email"
+              placeholder="YourEmail@gmail.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(event) => setEmail(event.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
             />
@@ -60,11 +91,13 @@ function Register() {
             <label className="block text-sm font-semibold text-gray-700 mb-2">
               Password
             </label>
+
             <input
               type="password"
               placeholder="Minimum 6 characters"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(event) => setPassword(event.target.value)}
+              minLength={6}
               required
               className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#556B2F] outline-none"
             />
@@ -80,7 +113,11 @@ function Register() {
 
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
-          <Link to="/" className="text-[#556B2F] font-semibold hover:underline">
+          <Link
+            to="/"
+            onClick={(event) => handlePageSwitch(event, "/")}
+            className="text-[#556B2F] font-semibold hover:underline"
+          >
             Login
           </Link>
         </p>

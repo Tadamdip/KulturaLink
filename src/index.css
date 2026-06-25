@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 :root {
-    --app-bg-overlay: rgba(255, 255, 255, 0.78);
+    --app-bg-overlay: rgba(255, 255, 255, 0.62);
 }
 
 .dark{
@@ -14,4 +14,108 @@
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+
+/* Flip card animation */
+.auth-perspective {
+  perspective: 1200px;
+}
+
+.auth-flip-card {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  animation: auth-flip-in 500ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.auth-flip-card.auth-flip-out {
+  pointer-events: none;
+  animation: auth-flip-out 400ms cubic-bezier(0.64, 0, 0.78, 0) both;
+}
+
+@keyframes auth-flip-in {
+  from {
+    opacity: 0;
+    transform: rotateX(-90deg) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes auth-flip-out {
+  from {
+    opacity: 1;
+    transform: rotateX(0deg) scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: rotateX(90deg) scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-flip-card,
+  .auth-flip-card.auth-flip-out {
+    animation: none;
+  }
+}
+
+/* Glassmorphism Style modal */
+.auth-glass-card {
+  color: #2a1f1a;
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(200, 169, 107, 0.55);
+  border-radius: 20px;
+  box-shadow:
+    0 24px 60px rgba(42, 31, 26, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+}
+
+.dark .auth-glass-card {
+  color: #f8fafc;
+  background: rgba(15, 23, 42, 0.76);
+  border-color: rgba(200, 169, 107, 0.4);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.auth-glass-card input {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(62, 47, 38, 0.25);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.auth-glass-card input:focus {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #556b2f;
+  box-shadow: 0 0 0 3px rgba(85, 107, 47, 0.18);
+}
+
+.dark .auth-glass-card input {
+  color: #f8fafc;
+  background: rgba(30, 41, 59, 0.72);
+  border-color: rgba(148, 163, 184, 0.35);
+}
+
+.dark .auth-glass-card input::placeholder {
+  color: #94a3b8;
+}
+
+@supports not (backdrop-filter: blur(18px)) {
+  .auth-glass-card {
+    background: rgba(255, 255, 255, 0.94);
+  }
+
+  .dark .auth-glass-card {
+    background: rgba(15, 23, 42, 0.96);
+  }
 }
